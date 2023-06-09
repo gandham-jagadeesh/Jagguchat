@@ -9,13 +9,12 @@ import { ChatContext } from "../context/chatContext";
 
   useEffect(()=>{
     ref.current.scrollIntoView({behaviour:"smooth"});
-    console.log(message);
   },[message])
 
   return (
     <div ref={ref} className={`message ${message?.senderId === currentUser.uid && "owner"}`} >
     <div className="messageInfo">
-      <img src={message?.senderId === currentUser.uid ? currentUser.photoURL : data.user.uid} alt=""></img>
+      <img src={message?.senderId === currentUser.uid ? currentUser.photoURL : data.user.photoURL} alt=""></img>
       <span>just now</span>
     </div>
     <div className="messageContent">

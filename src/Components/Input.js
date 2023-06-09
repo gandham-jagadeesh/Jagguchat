@@ -16,19 +16,23 @@ export default function Input() {
   const {currentUser} = useContext(AuthContext);
 
   const HandleSend = async ()=>{
-
       if(img){
         const storageRef = ref(storage,uuid());
         await uploadBytesResumable(storageRef,img);
         const photoUrl   = await getDownloadURL(storageRef);
-      await updateDoc(doc(db,"chats",data.chatId),{
-        messsages: arrayUnion({
-          id:uuid(),
-          text,
-          senderId:currentUser.uid,
-          date:Timestamp.now(),
-          img:photoUrl
-        })})
+      try{
+        await updateDoc(doc(db,"chats",data.chatId),{
+          messsages: arrayUnion({
+            id:uuid(),
+            text,
+            senderId:currentUser.uid,
+            date:Timestamp.now(),
+            img:photoUrl
+          })})  
+      }
+      catch(e){
+        console.log(e);
+      }
 
 }
 
@@ -41,7 +45,8 @@ export default function Input() {
               date:Timestamp.now()
             })
 
-          })}
+          })
+        }
 
           await updateDoc(doc(db,"userChats",data.user.uid),{
           [data.chatId + ".lastMessage"]:{
