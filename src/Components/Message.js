@@ -18,7 +18,7 @@ import { ChatContext } from "../context/chatContext";
       <span>just now</span>
     </div>
     <div className="messageContent">
-  {message?.img && <img src={message?.img} alt=""></img>}
+  {message.img && <img src={message?.img} alt=""></img>}
     <p>{message?.text}</p>
     </div>
     </div>

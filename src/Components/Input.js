@@ -20,21 +20,24 @@ export default function Input() {
         const storageRef = ref(storage,uuid());
         await uploadBytesResumable(storageRef,img);
         const photoUrl   = await getDownloadURL(storageRef);
-      try{
-        await updateDoc(doc(db,"chats",data.chatId),{
-          messsages: arrayUnion({
-            id:uuid(),
-            text,
-            senderId:currentUser.uid,
-            date:Timestamp.now(),
-            img:photoUrl
-          })})  
+        if(photoUrl){
+          try{
+           await updateDoc(doc(db,"chats",data.chatId),{
+              messages: arrayUnion({
+                id:uuid(),
+                text,
+                senderId:currentUser.uid,
+                img:photoUrl,
+                date:Timestamp.now(),
+              })})
+          }
+          catch(e){
+            console.log(e);
+          }
       }
-      catch(e){
-        console.log(e);
-      }
+      
 
-}
+           }
 
         else{
           await updateDoc(doc(db,"chats",data.chatId),{

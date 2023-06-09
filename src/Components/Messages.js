@@ -10,12 +10,12 @@ export default function Messages(){
    const {data} = useContext(ChatContext);
 
    const [messages,setMessages] = useState([]);
+   console.log(messages);
    
       useEffect(()=>{
       const unsub = onSnapshot(doc(db,"chats",data.chatId),(doc)=>{
-
          doc.exists() && setMessages(doc.data().messages);
-      })
+      }) 
       return ()=>{
          unsub()
       }
